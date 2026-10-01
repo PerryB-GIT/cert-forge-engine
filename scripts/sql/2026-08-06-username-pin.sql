@@ -189,8 +189,8 @@ revoke execute on function public.cf_set_credentials(text, text) from public, an
 revoke execute on function public.cf_claim_profile(text, text) from public, anon;
 revoke execute on function public.cf_my_username() from public, anon;
 
-grant execute on function public.cf_set_credentials(text, text) to authenticated;
-grant execute on function public.cf_claim_profile(text, text) to authenticated;
-grant execute on function public.cf_my_username() to authenticated;
+grant execute on function public.cf_set_credentials(text, text) to authenticated, service_role;
+grant execute on function public.cf_claim_profile(text, text) to authenticated, service_role;
+grant execute on function public.cf_my_username() to authenticated, service_role;
 
 commit;

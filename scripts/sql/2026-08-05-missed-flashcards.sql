@@ -451,10 +451,10 @@ revoke execute on function public.cf_finish_flashcards(text, timestamptz) from p
 revoke execute on function public.cf_missed_items(text) from public, anon;
 revoke execute on function public.cf_practice_stats() from public, anon;
 
-grant execute on function public.cf_flashcard_grade(text, boolean) to authenticated;
-grant execute on function public.cf_finish_flashcards(text, timestamptz) to authenticated;
-grant execute on function public.cf_missed_items(text) to authenticated;
-grant execute on function public.cf_practice_stats() to authenticated;
+grant execute on function public.cf_flashcard_grade(text, boolean) to authenticated, service_role;
+grant execute on function public.cf_finish_flashcards(text, timestamptz) to authenticated, service_role;
+grant execute on function public.cf_missed_items(text) to authenticated, service_role;
+grant execute on function public.cf_practice_stats() to authenticated, service_role;
 
 -- Supabase's default privileges hand anon full DML on new public tables and rely
 -- on RLS alone. Anonymous sign-in issues an `authenticated` JWT, so the anon role
