@@ -1,17 +1,40 @@
 # Cert Forge (engine)
 
+> **Not an Anthropic product.** Cert Forge is an independent study tool built by Support Forge. It is not affiliated
+> with, endorsed by, or sponsored by Anthropic (or Pearson VUE). It was built using information from Anthropic's
+> publicly available documentation and its published certification exam guides — nothing private or exam-confidential.
+
 Cert Forge is a study tracker and exam simulator for certification exams. It has blueprint-weighted mock exams,
 spaced-repetition practice, flashcards for missed items, per-domain study sheets, a report card and an opt-in leaderboard.
 It was built to prepare a small group for the Claude certification exams.
+
+## Built for one exam family, useful for any
+
+The first use case was Anthropic's Claude certifications, but very little of the engine is specific to them. The
+methodology and tools apply to almost any learning application where people need to know whether they are actually
+ready, not just whether they have been busy:
+
+- **Professional certifications** — cloud, security, project management, finance, healthcare, trades licensing.
+- **Corporate training and onboarding** — product knowledge, compliance, policy and safety refreshers.
+- **Academic courses and test prep** — any subject with a blueprint of topics and weights.
+- **Language learning and vocabulary** — the spaced-repetition scheduler and flashcards work unchanged.
+- **Internal skills programs** — opt-in team leaderboards and weekly quests without public shaming.
+
+What carries over directly: blueprint-weighted scoring, fresh-item scoring with honest error margins, the Leitner
+spaced-review scheduler, the answer-giveaway ("tell") gates for any multiple-choice bank, the always-rolled-back
+database test harness, invite-gated access to protect a question bank, and the research-backed gamification design
+in [`docs/gamification-research.md`](docs/gamification-research.md). Swap in your own blueprint
+(`src/lib/exams.ts`) and question bank (see the sample in `fixtures/questions/sample/`) and the rest follows.
 
 This repository contains **the code only**: the app, the database functions and migrations, the scripts and the
 tests. It does **not** include the real question banks or any text from the exam guides (see
 [What is not included](#what-is-not-included)). An original 8-question sample bank is included so the test suite and
 the source-link feature have something to run against.
 
-Cert Forge is an independent study tool from Support Forge. It is **not affiliated with, endorsed by, or sponsored by
-Anthropic** (or Pearson VUE). "Claude" is a trademark of Anthropic. The exam codes, names, domain names and weights in
-`src/lib/exams.ts` are only the public blueprint facts the scorer needs.
+**Sources and affiliation.** The exam blueprints (codes, names, domains and weights in `src/lib/exams.ts`) and the
+study links come from Anthropic's publicly available documentation and published exam guides. Cert Forge is an
+independent tool, **not an Anthropic product**, and is not affiliated with, endorsed by, or sponsored by Anthropic or
+Pearson VUE. "Claude" and "Anthropic" are trademarks of Anthropic.
 
 ---
 
@@ -189,9 +212,9 @@ config as build args: `docker build --build-arg NEXT_PUBLIC_SUPABASE_URL=... --b
 - **Exam-guide text:**
   - Not included: the guide PDFs, the objectives extracted from them (`src/lib/objectives/<code>.ts` are stubs; see
     `src/lib/objectives/stub.ts`), the guide page map, and the curated per-task study links.
-  - Why: the guides belong to their publisher and are distributed through a partner programme, so their text is not
-    redistributed here.
-  - To regenerate from your own licensed copies, put the PDFs in `guides/`, which is gitignored, then run:
+  - Why: the guides are publicly available from Anthropic, but they are Anthropic's documents, so this repo links to
+    the source rather than redistributing their text.
+  - To regenerate, download the guides from Anthropic, put the PDFs in `guides/` (gitignored), then run:
     - `npx tsx scripts/extract-objectives.ts`
     - `npx tsx scripts/extract-guide-pages.ts`
     - `npx tsx scripts/extract-blueprint.ts`
@@ -200,4 +223,7 @@ config as build args: `docker build --build-arg NEXT_PUBLIC_SUPABASE_URL=... --b
 - **Deployment configuration and identifiers:** project refs, keys, service URLs, invite codes and internal planning
   documents are not included.
 
-No license file is included. All rights reserved unless the owner states otherwise.
+## License
+
+[MIT](LICENSE) © 2026 Support Forge LLC. The license covers this code. It does not grant any rights to Anthropic's
+documentation, exam guides or trademarks.
