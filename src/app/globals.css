@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+:root {
+  /* Support Forge brand — black/silver/purple. */
+  --sf-bg: #050508; /* forge bg-dark */
+  --sf-surface: #0f0f14; /* forge bg-surface */
+  --sf-surface-2: #18181f; /* forge bg-elevated */
+  --sf-border: #2a2a35; /* forge border-subtle */
+  --sf-ink: #f9fafb; /* forge text-primary */
+  --sf-ink-2: #c0c0c0; /* forge-silver */
+  --sf-ink-3: #9ca3af; /* forge-silver-dark */
+  --sf-accent: #8b5cf6; /* forge-purple */
+  --sf-accent-hi: #a78bfa; /* forge-purple-light */
+  /* Status — reserved for state, never used as a series colour. Deliberately
+     lighter steps than --sf-cat-3 so "passing green" never reads as CCAR-F. */
+  --sf-good: #10b981;
+  --sf-warn: #f59e0b;
+  --sf-bad: #ef4444;
+  /* Categorical palette — identity, fixed exam order, never cycled.
+     Validated on surface #0f0f14 (dark): lightness band, chroma floor, CVD
+     separation, normal-vision floor, contrast all pass. CCAR-P is pink, NOT
+     the brand purple — an exam must never wear the accent colour, or its
+     series is indistinguishable from the app chrome. Re-run before editing:
+     node scripts/validate_palette.js "#ea580c,#0284c7,#059669,#ec4899" \
+       --mode dark --surface "#0f0f14" --pairs all
+     Worst CVD pair sits in the 6-8 floor band, which is legal here only
+     because every exam is direct-labelled with its code beside the colour. */
+  --sf-cat-1: #ea580c; /* CCAO-F */
+  --sf-cat-2: #0284c7; /* CCDV-F */
+  --sf-cat-3: #059669; /* CCAR-F */
+  --sf-cat-4: #ec4899; /* CCAR-P */
+}
+
+@theme inline {
+  --color-bg: var(--sf-bg);
+  --color-surface: var(--sf-surface);
+  --color-surface2: var(--sf-surface-2);
+  --color-edge: var(--sf-border);
+  --color-ink: var(--sf-ink);
+  --color-ink2: var(--sf-ink-2);
+  --color-ink3: var(--sf-ink-3);
+  --color-accent: var(--sf-accent);
+  --color-accenthi: var(--sf-accent-hi);
+  --color-good: var(--sf-good);
+  --color-warn: var(--sf-warn);
+  --color-bad: var(--sf-bad);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-space-grotesk);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  background: var(--sf-bg);
+  color: var(--sf-ink);
+}
+
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Headings wear Space Grotesk brand-wide — set here rather than on each of the
+   26 h1/h2 call sites. Space Grotesk tops out at 700, so `font-black` (900)
+   clamps; headings use font-bold to ask for what the face can actually give. */
+h1,
+h2 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+}
+
+.card {
+  background: var(--sf-surface);
+  border: 1px solid var(--sf-border);
+  border-radius: 14px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 0.625rem 1.25rem;
+  transition: background 0.15s, transform 0.05s;
+  cursor: pointer;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--sf-accent); color: #fff; }
+.btn-primary:hover { background: var(--sf-accent-hi); }
+.btn-ghost { background: transparent; border: 1px solid var(--sf-border); color: var(--sf-ink); }
+.btn-ghost:hover { background: var(--sf-surface-2); }
+.btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+input[type="number"], input[type="email"], input[type="text"] {
+  background: var(--sf-surface-2);
+  border: 1px solid var(--sf-border);
+  border-radius: 8px;
+  color: var(--sf-ink);
+  padding: 0.5rem 0.75rem;
+}
+input:focus { outline: 2px solid var(--sf-accent); outline-offset: 1px; }
+
+/* Keyboard focus was visible on inputs only — every button, link, and answer
+   option fell back to the UA ring, which is close to invisible on #050508.
+   :where() keeps specificity at 0 so component styles still win on everything
+   except the ring itself. */
+:where(a, button, summary, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid var(--sf-accent-hi);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+::selection { background: rgba(139, 92, 246, 0.4); }
+
+/* Study sheets are meant to be printed. Drop the dark theme to ink-on-paper,
+   strip the app chrome, and keep domain sections from splitting across pages. */
+@media print {
+  html,
+  body {
+    background: #fff;
+    color: #000;
+  }
+  header,
+  footer,
+  nav,
+  .btn {
+    display: none !important;
+  }
+  main {
+    max-width: none;
+    padding: 0;
+  }
+  .card {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    padding: 0 0 0.75rem 0 !important;
+    margin-bottom: 0.75rem;
+    break-inside: avoid;
+  }
+  /* Utility colour classes resolve to CSS vars; re-point the vars rather than
+     chasing every class. */
+  :root {
+    --sf-ink: #000;
+    --sf-ink-2: #333;
+    --sf-ink-3: #666;
+    --sf-accent-hi: #5b21b6;
+    --sf-surface: transparent;
+    --sf-surface-2: #f4f4f5;
+    --sf-border: #ccc;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}

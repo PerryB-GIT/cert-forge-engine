@@ -1,0 +1,221 @@
+{
+  "exam_code": "DEMO-F",
+  "questions": [
+    {
+      "id": "DEMO-F-D1-01",
+      "domain": "Software Fundamentals",
+      "scenario": null,
+      "multi": false,
+      "select_count": 1,
+      "stem": "A client retries a failed HTTP request immediately and without limit. During a partial outage of the server, what is the most likely effect?",
+      "options": [
+        "Retry traffic piles onto the struggling server and slows its recovery",
+        "Recovery speeds up because every client reaches the server sooner",
+        "Nothing changes, because the server cannot tell a retry from a request",
+        "Latency drops for all callers as soon as the outage begins"
+      ],
+      "correct": [
+        0
+      ],
+      "rationale": {
+        "overall": "Unbounded immediate retries multiply load on a dependency that is already failing, which is why retries are normally capped and spaced out with backoff and jitter.",
+        "options": [
+          "Correct: retries add load exactly when the server has the least capacity to absorb it",
+          "Reaching an overloaded server sooner does not help it recover; it adds to the queue",
+          "The server does see every retry as additional work, whether or not it can label it",
+          "Extra load during an outage raises latency rather than lowering it"
+        ]
+      },
+      "tip": "Pair retries with a cap, exponential backoff and jitter."
+    },
+    {
+      "id": "DEMO-F-D1-02",
+      "domain": "Software Fundamentals",
+      "scenario": null,
+      "multi": false,
+      "select_count": 1,
+      "stem": "A schema migration failed halfway through and must be run again. Which property of its steps makes a re-run safe?",
+      "options": [
+        "Each step is scheduled for a quiet hour of the day",
+        "Each step is idempotent, so repeating it changes nothing",
+        "Each step is written inside one very large comment block",
+        "Each step raises the statement timeout before it starts"
+      ],
+      "correct": [
+        1
+      ],
+      "rationale": {
+        "overall": "An idempotent step produces the same end state whether it runs once or several times, so a partial run can simply be repeated.",
+        "options": [
+          "Timing reduces user impact but does not make a repeated step safe",
+          "Correct: idempotent steps can be re-applied after a partial failure without harm",
+          "Commented-out SQL does not run at all, so it migrates nothing",
+          "A longer timeout changes how long a step may run, not whether repeating it is safe"
+        ]
+      },
+      "tip": "Prefer create-if-not-exists and guarded updates in migrations."
+    },
+    {
+      "id": "DEMO-F-D1-03",
+      "domain": "Software Fundamentals",
+      "scenario": null,
+      "multi": false,
+      "select_count": 1,
+      "stem": "A unit test passes on a laptop but fails now and then in continuous integration. What should be investigated first?",
+      "options": [
+        "The CI machine renders fonts differently from the laptop",
+        "The name of the test is too long for the CI log viewer",
+        "Shared state or timing dependence between tests",
+        "The repository has accumulated too many old branches"
+      ],
+      "correct": [
+        2
+      ],
+      "rationale": {
+        "overall": "Intermittent failures that depend on the environment usually come from test order, shared mutable state or timing assumptions rather than cosmetic differences.",
+        "options": [
+          "Font rendering rarely affects a unit test and would fail consistently, not now and then",
+          "A long test name affects display only and cannot change the outcome",
+          "Correct: order-dependent state and timing races are the classic source of flaky tests",
+          "Branch count has no effect on how a single test executes"
+        ]
+      },
+      "tip": "Run the suite in random order to expose hidden coupling."
+    },
+    {
+      "id": "DEMO-F-D1-04",
+      "domain": "Software Fundamentals",
+      "scenario": null,
+      "multi": false,
+      "select_count": 1,
+      "stem": "What does a code review gain when the change under review is small and has a single purpose?",
+      "options": [
+        "It removes the need for any automated test coverage",
+        "It guarantees that the merged change contains no defects",
+        "It lets the author skip writing a description of the change",
+        "Reviewers can hold the whole change in mind and spot defects"
+      ],
+      "correct": [
+        3
+      ],
+      "rationale": {
+        "overall": "Small focused diffs fit in a reviewer's working memory, which improves how many defects a review catches.",
+        "options": [
+          "Tests and review catch different problems; a small diff replaces neither",
+          "No review process can guarantee the absence of defects",
+          "Context still matters for reviewers and future readers, whatever the size",
+          "Correct: a focused change can be understood completely, so problems stand out"
+        ]
+      },
+      "tip": "Split refactors from behaviour changes so each diff tells one story."
+    },
+    {
+      "id": "DEMO-F-D2-01",
+      "domain": "Agent Design",
+      "scenario": null,
+      "multi": false,
+      "select_count": 1,
+      "stem": "An agent calls a tool and the tool returns an error. What should the agent loop do with that result?",
+      "options": [
+        "Return the error to the model as the tool result so it can adapt",
+        "Drop the call silently and continue with the next step",
+        "Restart the whole conversation from the very first message",
+        "Rewrite the error as a success so that the run can finish"
+      ],
+      "correct": [
+        0
+      ],
+      "rationale": {
+        "overall": "Feeding the error back lets the model correct its arguments, choose another tool or explain the failure, instead of acting on a result that never happened.",
+        "options": [
+          "Correct: the model can only recover from an error it is allowed to see",
+          "Silently dropping the call hides the failure and leaves the model working from a false picture",
+          "Restarting discards useful progress and will usually hit the same error again",
+          "Reporting a failure as a success causes the agent to act on results that do not exist"
+        ]
+      },
+      "tip": "Treat tool errors as information for the model, not exceptions to hide."
+    },
+    {
+      "id": "DEMO-F-D2-02",
+      "domain": "Agent Design",
+      "scenario": null,
+      "multi": false,
+      "select_count": 1,
+      "stem": "Why should every tool exposed to an agent have a precise name and description?",
+      "options": [
+        "Descriptions are read only by the people who maintain the tools",
+        "The model decides which tool to call largely from that text",
+        "Longer tool names reduce the number of tokens in each request",
+        "A good description lets a tool run without any input schema"
+      ],
+      "correct": [
+        1
+      ],
+      "rationale": {
+        "overall": "The model sees tool names and descriptions when choosing what to call, so vague text leads directly to wrong or missed tool calls.",
+        "options": [
+          "The model reads them too, and relies on them when choosing a tool",
+          "Correct: tool selection is driven by the name and description the model is given",
+          "Longer names add tokens rather than removing them",
+          "Descriptions explain purpose; the input schema still defines the arguments"
+        ]
+      },
+      "tip": "Write tool descriptions for the model as carefully as for a teammate."
+    },
+    {
+      "id": "DEMO-F-D2-03",
+      "domain": "Agent Design",
+      "scenario": null,
+      "multi": false,
+      "select_count": 1,
+      "stem": "A long-running agent is close to filling its context window. Which approach keeps the most useful information?",
+      "options": [
+        "Delete the oldest messages without reading what they contain",
+        "Raise the sampling temperature for the remaining turns",
+        "Summarise finished work and keep open decisions verbatim",
+        "Move to a model that has a smaller context window"
+      ],
+      "correct": [
+        2
+      ],
+      "rationale": {
+        "overall": "Compacting completed work into a summary frees space while the details that still matter, such as open decisions and constraints, are kept exactly.",
+        "options": [
+          "Blind truncation can remove constraints the agent still needs",
+          "Temperature changes randomness, not how much context is available",
+          "Correct: summarise what is settled and preserve what is still in play",
+          "A smaller window makes the space problem worse, not better"
+        ]
+      },
+      "tip": "Decide what must survive compaction before the window is full."
+    },
+    {
+      "id": "DEMO-F-D2-04",
+      "domain": "Agent Design",
+      "scenario": null,
+      "multi": false,
+      "select_count": 1,
+      "stem": "When should an agent hand a decision to a person instead of acting on its own?",
+      "options": [
+        "Every single time one of its tool calls completes without an error",
+        "Never, because full autonomy is the purpose of an agent",
+        "Only once its context window has been completely used up",
+        "When an action is irreversible or beyond its granted authority"
+      ],
+      "correct": [
+        3
+      ],
+      "rationale": {
+        "overall": "Escalation is warranted when a mistake cannot be undone or when the action exceeds what the agent was authorised to do.",
+        "options": [
+          "Routine successful calls are exactly what an agent should handle alone",
+          "Useful agents still operate inside limits that people set",
+          "Context size is a resource issue, not a reason to escalate a decision",
+          "Correct: irreversible or out-of-scope actions are the points where people should decide"
+        ]
+      },
+      "tip": "Define the escalation boundary up front, in the agent's instructions."
+    }
+  ]
+}

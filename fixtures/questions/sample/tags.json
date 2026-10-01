@@ -1,0 +1,20 @@
+{
+  "exam_code": "DEMO-F",
+  "note": "Sample task-statement tags for the DEMO-F sample bank. Same schema as a real fixtures/questions/tags/<CODE>.json: task id = <domain#>.<statement#> in blueprint order.",
+  "tasks": {
+    "1.1": "Design resilient calls between services",
+    "1.2": "Change code and data safely",
+    "2.1": "Run a tool-using agent loop",
+    "2.2": "Manage agent context and escalation"
+  },
+  "items": {
+    "DEMO-F-D1-01": "1.1",
+    "DEMO-F-D1-02": "1.2",
+    "DEMO-F-D1-03": "1.2",
+    "DEMO-F-D1-04": "1.2",
+    "DEMO-F-D2-01": "2.1",
+    "DEMO-F-D2-02": "2.1",
+    "DEMO-F-D2-03": "2.2",
+    "DEMO-F-D2-04": "2.2"
+  }
+}

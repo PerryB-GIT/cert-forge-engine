@@ -1,0 +1,33 @@
+{
+  "verified_on": "2026-10-01",
+  "exams": {
+    "DEMO-F": {
+      "tasks": {
+        "1.1": [
+          {
+            "title": "Timeouts, retries, and backoff with jitter",
+            "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+          }
+        ],
+        "1.2": [
+          {
+            "title": "Eradicating non-determinism in tests",
+            "url": "https://martinfowler.com/articles/nonDeterminism.html"
+          }
+        ],
+        "2.1": [
+          {
+            "title": "How tool use works",
+            "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works"
+          }
+        ],
+        "2.2": [
+          {
+            "title": "Building effective agents",
+            "url": "https://www.anthropic.com/engineering/building-effective-agents"
+          }
+        ]
+      }
+    }
+  }
+}

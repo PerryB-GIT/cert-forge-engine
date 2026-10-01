@@ -1,0 +1,15 @@
+{
+  "DEMO-F": {
+    "file": "DEMO-F-guide.pdf",
+    "domains": {
+      "Software Fundamentals": 2,
+      "Agent Design": 3
+    },
+    "tasks": {
+      "1.1": 2,
+      "1.2": 2,
+      "2.1": 3,
+      "2.2": 3
+    }
+  }
+}

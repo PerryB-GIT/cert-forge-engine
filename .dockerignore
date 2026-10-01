@@ -1,0 +1,18 @@
+node_modules
+.next
+.git
+# Answer keys, patches and holdout never go in the image. Listed explicitly
+# (no negation rules) so every ignore engine agrees. fixtures/questions/sample
+# ships: src/lib/sources.ts imports its source data at build time (as would
+# fixtures/sources and fixtures/questions/tags in a full deployment). A NEW
+# fixtures subfolder ships by default - add it here if it holds answers.
+fixtures/exams.json
+fixtures/key-permutations.json
+fixtures/questions/*.json
+fixtures/questions/additions
+fixtures/questions/holdout
+fixtures/questions/patches
+tasks
+scripts/sql
+.env*
+*.md
